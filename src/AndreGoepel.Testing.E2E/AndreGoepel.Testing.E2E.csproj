@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- Aspire.Hosting.Testing pulls RID-specific orchestration packages, so a committed
+         lock file would be OS-dependent and break a consuming repo's CI locked-mode restore
+         if this project's transitive graph flowed through it. Every *.E2ETests project in the
+         ecosystem opts out of lock files for the same reason; this package does too. -->
+    <RestorePackagesWithLockFile>false</RestorePackagesWithLockFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>AndreGoepel.Testing.E2E</PackageId>
+    <Version>1.0.0</Version>
+    <Description>Shared Playwright + .NET Aspire end-to-end testing infrastructure: app fixture, page extensions, MailHog client, TOTP/passkey helpers, and a trace-capture-on-failure test base.</Description>
+    <PackageTags>testing;e2e;playwright;aspire;xunit</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Aspire.Hosting.Testing" />
+    <PackageReference Include="Microsoft.Playwright" />
+    <PackageReference Include="Otp.NET" />
+    <!-- The extensibility-only package: just the xunit.v3 types this library's public surface uses
+         (IAsyncLifetime, [Collection], TestContext, ICollectionFixture<T>) with no test runner, so
+         referencing it from a non-test class library doesn't drag in an executable output type. -->
+    <PackageReference Include="xunit.v3.extensibility.core" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AndreGoepel.Testing.E2E.Tests" />
+  </ItemGroup>
+</Project>

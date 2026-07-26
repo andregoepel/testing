@@ -161,6 +161,11 @@ ipch/
 # Visual Studio Trace Files
 *.e2e
 
+# The rule above matches this repo's own project directory case-insensitively (it ends in
+# ".E2E") — un-ignore just the directory entry itself so git resumes evaluating everything
+# under it file-by-file against the rest of this file (bin/obj/etc. stay ignored as normal).
+!/src/AndreGoepel.Testing.E2E/
+
 # TFS 2012 Local Workspace
 $tf/
 
