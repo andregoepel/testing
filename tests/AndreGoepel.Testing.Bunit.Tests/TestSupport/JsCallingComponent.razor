@@ -1,0 +1,13 @@
+@inject IJSRuntime JS
+
+<p>js-calling-component</p>
+
+@code {
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await JS.InvokeVoidAsync("someJsFunction");
+        }
+    }
+}
