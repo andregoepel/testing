@@ -53,30 +53,13 @@ jobs:
     if: startsWith(github.ref, 'refs/tags/v')
 
     permissions:
-      id-token: write # request the OIDC token for NuGet trusted publishing
+      id-token: write # NuGet OIDC trusted publishing
       contents: read
 
     steps:
-      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
-
-      - uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+      - uses: andregoepel/workflows/.github/actions/nuget-publish@main
         with:
-          dotnet-version: "10.0.x"
-
-      - name: Pack
-        run: |
-          VERSION="${GITHUB_REF_NAME#v}"
-          dotnet pack src/AndreGoepel.Testing.E2E/AndreGoepel.Testing.E2E.csproj \
-            -c Release -p:Version=$VERSION -p:RestoreLockedMode=true -o nupkgs
-
-      # Trusted publishing: exchange the GitHub OIDC token for a short-lived
-      # nuget.org API key. Requires a trusted publishing policy on nuget.org
-      # (owner: andregoepel, repository: testing, workflow: ci.yml).
-      - name: NuGet login (OIDC → temporary API key)
-        uses: NuGet/login@8d196754b4036150537f80ac539e15c2f1028841 # v1
-        id: login
-        with:
-          user: ${{ secrets.NUGET_USER }}
-
-      - name: Push to NuGet
-        run: dotnet nuget push "nupkgs/*.nupkg" --api-key ${{ steps.login.outputs.NUGET_API_KEY }} --source https://api.nuget.org/v3/index.json
+          pack-projects: |
+            src/AndreGoepel.Testing.Bunit/AndreGoepel.Testing.Bunit.csproj
+            src/AndreGoepel.Testing.E2E/AndreGoepel.Testing.E2E.csproj
+          nuget-user: ${{ secrets.NUGET_USER }}

@@ -1,0 +1,39 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <!-- Unlike AndreGoepel.Testing.E2E, this package has no RID-specific dependency graph, so
+         it inherits RestorePackagesWithLockFile=true from Directory.Build.props and commits a
+         packages.lock.json — CI's locked-mode restore then actually covers it. -->
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <PackageId>AndreGoepel.Testing.Bunit</PackageId>
+    <Version>1.2.0</Version>
+    <Description>Shared bUnit test helpers for the AndreGoepel .NET ecosystem: a culture pinning scope, a resx-backed test localizer, and opt-in bUnit context setup extensions.</Description>
+    <PackageTags>testing;bunit;blazor;localization;xunit</PackageTags>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <IsPackable>true</IsPackable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\..\README.md" Pack="true" PackagePath="\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- BunitContext + the AngleSharp render surface. bUnit 2.x is test-framework agnostic, so
+         no xunit reference is needed here (unlike AndreGoepel.Testing.E2E). -->
+    <PackageReference Include="bunit" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- IStringLocalizer / AddLocalization / AddLogging live in the ASP.NET Core shared
+         framework; bUnit already requires it. -->
+    <FrameworkReference Include="Microsoft.AspNetCore.App" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AndreGoepel.Testing.Bunit.Tests" />
+  </ItemGroup>
+</Project>
