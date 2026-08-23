@@ -10,7 +10,6 @@
 
   <PropertyGroup>
     <PackageId>AndreGoepel.Testing.Bunit</PackageId>
-    <Version>1.2.0</Version>
     <Description>Shared bUnit test helpers for the AndreGoepel .NET ecosystem: a culture pinning scope, a resx-backed test localizer, and opt-in bUnit context setup extensions.</Description>
     <PackageTags>testing;bunit;blazor;localization;xunit</PackageTags>
     <PackageReadmeFile>README.md</PackageReadmeFile>
