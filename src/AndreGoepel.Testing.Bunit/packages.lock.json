@@ -15,11 +15,6 @@
           "Microsoft.AspNetCore.Components.WebAssembly.Authentication": "10.0.10"
         }
       },
-      "AngleSharp": {
-        "type": "Transitive",
-        "resolved": "1.7.0",
-        "contentHash": "v1R++46dblGRBo2/fKFUfgtZOaFnDGQhqBM0AarxgZSJuumj1e1vexBbjlTv2hx3Olr3qeoJa2yUoWyv5fuJ5A=="
-      },
       "AngleSharp.Css": {
         "type": "Transitive",
         "resolved": "1.0.1",
@@ -54,6 +49,12 @@
         "type": "Transitive",
         "resolved": "10.0.10",
         "contentHash": "FjPAGQWbCP85FWY2Wl9opHSsY+u9nZb8Ui6eTVHEMY/RJateOhW78jEtC4QOQ/6slkS1MKyIAF6ZHIrUR1fX/w=="
+      },
+      "AngleSharp": {
+        "type": "CentralTransitive",
+        "requested": "[1.7.0, )",
+        "resolved": "1.7.0",
+        "contentHash": "v1R++46dblGRBo2/fKFUfgtZOaFnDGQhqBM0AarxgZSJuumj1e1vexBbjlTv2hx3Olr3qeoJa2yUoWyv5fuJ5A=="
       }
     }
   }

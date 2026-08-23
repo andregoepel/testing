@@ -53,11 +53,6 @@
           "xunit.v3.mtp-v2": "[4.0.0]"
         }
       },
-      "AngleSharp": {
-        "type": "Transitive",
-        "resolved": "1.7.0",
-        "contentHash": "v1R++46dblGRBo2/fKFUfgtZOaFnDGQhqBM0AarxgZSJuumj1e1vexBbjlTv2hx3Olr3qeoJa2yUoWyv5fuJ5A=="
-      },
       "AngleSharp.Css": {
         "type": "Transitive",
         "resolved": "1.0.1",
@@ -484,6 +479,12 @@
         "dependencies": {
           "bunit": "[2.9.0, )"
         }
+      },
+      "AngleSharp": {
+        "type": "CentralTransitive",
+        "requested": "[1.7.0, )",
+        "resolved": "1.7.0",
+        "contentHash": "v1R++46dblGRBo2/fKFUfgtZOaFnDGQhqBM0AarxgZSJuumj1e1vexBbjlTv2hx3Olr3qeoJa2yUoWyv5fuJ5A=="
       },
       "xunit.v3.extensibility.core": {
         "type": "CentralTransitive",

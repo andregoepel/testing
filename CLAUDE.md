@@ -38,12 +38,20 @@ library's own public surface is built from.
   trace-capture-on-failure — unconditionally, not opt-in. A failed test's
   trace lands in `PLAYWRIGHT_TRACE_DIR` (defaults to `playwright-traces`)
   so CI can upload it as an artifact.
-- `PageExtensions` in the package is only the verbatim-identical core
+- **Hard constraint: the account flows must never key off visible text.**
+  `LoginAsync`/`RegisterAsync` submit via `ClickAccountSubmitAsync` →
+  `PageExtensions.ClickSubmitAsync`, which finds `type="submit"`, so a test
+  can set `Accept-Language` on its context and still log in. The selector is
+  page-wide on purpose: `Login.razor` renders its submit button *outside* the
+  `<form id="login-form">`, wired up by the HTML `form="..."` attribute, so
+  `form button[type=submit]` matches nothing there. Guard test:
+  `FormScopedSubmitSelector_LoginPageMarkup_MatchesNothing`.
+- `PageExtensions` in the package is the verbatim-identical core
   (`WaitForBlazorAsync`, `GotoAsync`, `FillFieldAsync`, `ClickButtonAsync`,
-  `ClickLinkAsync`, `AssertOnPathAsync`). App-specific selectors (Radzen
-  grid filters, design-system `FormField` locators, file upload helpers,
-  ...) stay local to each consuming repo as their own extension methods in
-  the same namespace.
+  `ClickLinkAsync`, `AssertOnPathAsync`) plus `ClickSubmitAsync`.
+  App-specific selectors (Radzen grid filters, design-system `FormField`
+  locators, file upload helpers, ...) stay local to each consuming repo as
+  their own extension methods in the same namespace.
 - `MailHogClient`, `TestData`, `Totp`, `VirtualAuthenticator` are
   consolidated as-is — they were identical or near-identical across all
   three source repos.
@@ -100,10 +108,18 @@ E2ECollection : ICollectionFixture<E2EAppFixture>` next to its fixture.
 ## Testing
 - `…Testing.E2E.Tests` — pure unit tests, no I/O, no Docker. Covers
   `MailHogClient`'s message-body decoding (quoted-printable, MIME parts,
-  link extraction) and `Totp`'s key normalization — the only genuinely
+  link extraction), `Totp`'s key normalization, and
+  `PageExtensions.SubmitControlSelector` against AngleSharp-parsed markup
+  transcribed from the identity account pages — the only genuinely
   unit-testable logic in a package that's otherwise Playwright/Aspire
   orchestration. `internal` members it exercises are exposed via
-  `InternalsVisibleTo`.
+  `InternalsVisibleTo`. AngleSharp is a test-only reference; it never enters
+  a packable project.
+- A real localized login cannot be exercised here: rendering
+  `/Account/Login` needs `AndreGoepel.Marten.Identity.Blazor`, which
+  *consumes* this package, so referencing it would point the dependency
+  arrow backwards. The selector tests pin the structural decisions; the
+  live proof stays in each consuming repo's `*.E2ETests`.
 - No E2E-of-the-E2E-helpers project: this package has no app of its own to
   boot, so there's nothing for `Aspire.Hosting.Testing` to drive here.
   Each *consuming* repo's own `*.E2ETests` suite is the real integration
