@@ -15,6 +15,9 @@
   </ItemGroup>
 
   <ItemGroup Label="Testing">
+    <!-- Test-only HTML/CSS engine: lets the E2E package's structural selectors be asserted against
+         real parsed markup without booting a browser. Never referenced by a packable project. -->
+    <PackageVersion Include="AngleSharp" Version="1.7.0" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />

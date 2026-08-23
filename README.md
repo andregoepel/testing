@@ -65,6 +65,17 @@ public sealed class LoginTests(E2EAppFixture fixture) : E2ETestBase<E2EAppFixtur
 
 `ProvisionAdminAsync`'s Setup-page button read "Create administrator" in `marten-identity`, "Create admin" in `app-foundation`, and "Create admin & complete setup" (matched via prefix) in `finance-app`. Rather than guess a shared wording and risk a silent no-op click in whichever repo doesn't match, `E2EAppFixtureOptions.ProvisionAdminButtonText` is `required` with no default. `ClickButtonAsync` already does a non-exact ("contains") match, so a stable prefix is enough.
 
+This is the one caption-based click left, and it stays that way: the Setup page belongs to each *host app*, not to the identity package, so there is no shared markup to key off. It is also unaffected by a test's culture — `ProvisionAdminAsync` runs in its own throwaway context created by `NewContextAsync()`, which sets no locale, so the Setup page renders in the app's default language whatever the test's own context asked for.
+
+#### The account flows submit structurally, not by caption
+
+`LoginAsync`/`LoginAsAdminAsync` and `RegisterAsync` used to click the literal strings `"Log in"` and `"Register"`. That made them unusable against a page rendered in another language: a `finance-app` test that set `Accept-Language: de` on its context got a 30-second `TimeoutException` waiting for `GetByRole(AriaRole.Button, new() { Name = "Log in" })`, and had to log in under English and switch culture afterwards.
+
+They now go through `ClickAccountSubmitAsync`, which locates the control by `type="submit"` (`PageExtensions.ClickSubmitAsync`). Two things about the shape of that selector:
+
+- **No new configuration knob.** These helpers are already structural everywhere else — the hard-coded `/Account/Login` path and the `[name='Email']` / `[name='NewPassword']` field lookups only work against `AndreGoepel.Marten.Identity.Blazor`'s pages regardless. Every account page that package ships renders exactly one submit control, so nothing needs configuring. `LoginButtonText`/`RegisterButtonText` options would only have handed every consumer a knob to keep in sync with a translation file.
+- **The selector is page-wide, not `form button[type=submit]`.** `Login.razor` renders its submit button *outside* the `<form id="login-form">` that `LoginForm.razor` produces, associating the two with the HTML `form="login-form"` attribute so the button can sit beside the passkey button in the action bar. A descendant selector matches nothing there. Page-wide is unambiguous anyway: the passkey button is `type="button"`, the hidden sign-in-handoff form has no button, and the login layout's language switcher renders plain anchors. `ClickSubmitAsync(scope)` takes an optional CSS scope, and `ClickAccountSubmitAsync` is `virtual`, for a host whose account pages ever do show two.
+
 #### Not using generics for the Aspire entry point
 
 Rather than `E2EAppFixture<TEntryPoint>`, the fixture takes a `Func<string[], Task<IDistributedApplicationTestingBuilder>> CreateAppHostBuilder` in its options. This keeps `E2ETestBase<TFixture>` constrainable to a single non-generic `E2EAppFixture` base type regardless of which `Projects.*` type each host's AppHost generates, and avoids every consuming repo having to spell out `E2EAppFixtureBase<Projects.AndreGoepel_FinanceApp_AppHost>` as a base-class type argument.

@@ -75,6 +75,24 @@ public abstract class E2ETestBase<TFixture>(TFixture fixture) : IAsyncLifetime
 
     #region Account flows
 
+    /// <summary>
+    /// Clicks the submit control of an account page (login, registration). Located structurally via
+    /// <see cref="PageExtensions.ClickSubmitAsync"/> rather than by caption, so these flows drive a page
+    /// rendered in any language — a test may set <c>Accept-Language</c> on its browser context and still
+    /// log in. Previously this clicked the literal strings "Log in" / "Register", which made a
+    /// German-rendered <c>/Account/Login</c> hang until Playwright's 30s timeout.
+    /// </summary>
+    /// <remarks>
+    /// Structural rather than a configurable caption because the rest of these helpers is already
+    /// structural: the hard-coded <c>/Account/Login</c> path and the <c>[name='Email']</c> /
+    /// <c>[name='NewPassword']</c> field lookups only work against
+    /// <c>AndreGoepel.Marten.Identity.Blazor</c>'s pages anyway, and every account page it ships renders
+    /// exactly one submit control. Adding caption options instead would have handed every consumer a knob
+    /// to keep in sync with a translation file. Override this in a host whose account pages genuinely show
+    /// more than one submit control, passing a <c>scope</c> to <c>ClickSubmitAsync</c>.
+    /// </remarks>
+    protected virtual Task ClickAccountSubmitAsync(IPage page) => page.ClickSubmitAsync();
+
     /// <summary>Logs the current page's session in via the real cookie-login flow.</summary>
     protected async Task LoginAsync(string email, string password, IPage? page = null)
     {
@@ -87,16 +105,16 @@ public abstract class E2ETestBase<TFixture>(TFixture fixture) : IAsyncLifetime
     }
 
     /// <summary>
-    /// Clicks "Log in" and waits to leave the login page. A click can land in the gap between the
+    /// Submits the login form and waits to leave the login page. A click can land in the gap between the
     /// circuit connecting and the form's submit handler attaching — it is then silently lost — so
     /// the click is retried until the cookie middleware redirects away. Exact-path equality keeps a
     /// redirect to /Account/LoginWith2fa (which *contains* /Account/Login) counting as "left".
     /// </summary>
-    private static async Task ClickAndLeaveLoginAsync(IPage page)
+    private async Task ClickAndLeaveLoginAsync(IPage page)
     {
         for (var attempt = 0; ; attempt++)
         {
-            await page.ClickButtonAsync("Log in");
+            await ClickAccountSubmitAsync(page);
             try
             {
                 await page.WaitForURLAsync(
@@ -134,7 +152,7 @@ public abstract class E2ETestBase<TFixture>(TFixture fixture) : IAsyncLifetime
         await Page.FillFieldAsync("Email", email);
         await Page.FillFieldAsync("NewPassword", password);
         await Page.FillFieldAsync("ConfirmPassword", password);
-        await Page.ClickButtonAsync("Register");
+        await ClickAccountSubmitAsync(Page);
         return email;
     }
 
