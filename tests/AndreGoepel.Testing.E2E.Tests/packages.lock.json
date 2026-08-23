@@ -41,8 +41,8 @@
       },
       "Aspire.Hosting": {
         "type": "Transitive",
-        "resolved": "13.5.1",
-        "contentHash": "d2ITV9b5w3NuicMqfnwWNZW6RzU2nczfI3ksBaIcbJW3sPMrbNxkfP6i8Uhz9SmFqKCo96LlJV5n1N528FxZ8Q==",
+        "resolved": "13.5.2",
+        "contentHash": "/Feq5MVWvVyMZDL6jBYyvMdGY51V9OOIuhGGHCaeuFf25uay7xr3KMoNud63SHLx6hegZgs5QwOsWN9t8FmStg==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
           "Google.Protobuf": "3.34.1",
@@ -77,11 +77,11 @@
       },
       "Aspire.Hosting.AppHost": {
         "type": "Transitive",
-        "resolved": "13.5.1",
-        "contentHash": "uM+y3+jecllEtCFAUYYPQ5Naw23Bey04V1h0eSW8NgjbOcEvAvF42LEoHJToiztIq8yTuz1mFHKeHF9aMhNpFA==",
+        "resolved": "13.5.2",
+        "contentHash": "v1raXGGY1IHwcPjDbxRC67+9AZvEkXmOBmi4OG9RI5/lsfRMAVJmTIdy+qYwi3PGcFG11hKxRUiOYc7WQ/eFEg==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.5.1",
+          "Aspire.Hosting": "13.5.2",
           "Google.Protobuf": "3.34.1",
           "Grpc.AspNetCore": "2.80.0",
           "Grpc.Net.ClientFactory": "2.80.0",
@@ -969,7 +969,7 @@
       "andregoepel.testing.e2e": {
         "type": "Project",
         "dependencies": {
-          "Aspire.Hosting.Testing": "[13.5.1, )",
+          "Aspire.Hosting.Testing": "[13.5.2, )",
           "Microsoft.Playwright": "[1.62.0, )",
           "Otp.NET": "[1.4.1, )",
           "xunit.v3.extensibility.core": "[4.0.0, )"
@@ -977,13 +977,13 @@
       },
       "Aspire.Hosting.Testing": {
         "type": "CentralTransitive",
-        "requested": "[13.5.1, )",
-        "resolved": "13.5.1",
-        "contentHash": "ihZrUYKWoTZiTZFSZAMtNZlfB+2tq0Dj0A9GQ7UpmzcWyirUCardz6Ynt7+7Yp8Ac/eL6HqkHXKukYvkzCv2Yg==",
+        "requested": "[13.5.2, )",
+        "resolved": "13.5.2",
+        "contentHash": "qZMuT7V9OacaqpdXeVMkzfcabURzCX7xSUM+DQvf+dGht3oClv+RtAPZQjdMjPnRVKPV5DvYlSK87ktAnOZ27g==",
         "dependencies": {
           "AspNetCore.HealthChecks.Uris": "9.0.0",
-          "Aspire.Hosting": "13.5.1",
-          "Aspire.Hosting.AppHost": "13.5.1",
+          "Aspire.Hosting": "13.5.2",
+          "Aspire.Hosting.AppHost": "13.5.2",
           "Google.Protobuf": "3.34.1",
           "Grpc.AspNetCore": "2.80.0",
           "Grpc.Net.ClientFactory": "2.80.0",
