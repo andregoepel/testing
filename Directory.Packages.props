@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="E2E (browser-driven tests)">
-    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.5.2" />
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.5.3" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.62.0" />
     <PackageVersion Include="Otp.NET" Version="1.4.1" />
   </ItemGroup>
@@ -17,7 +17,7 @@
   <ItemGroup Label="Testing">
     <!-- Test-only HTML/CSS engine: lets the E2E package's structural selectors be asserted against
          real parsed markup without booting a browser. Never referenced by a packable project. -->
-    <PackageVersion Include="AngleSharp" Version="1.7.1" />
+    <PackageVersion Include="AngleSharp" Version="1.7.2" />
     <PackageVersion Include="coverlet.collector" Version="10.0.1" />
     <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.9.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.0" />
