@@ -5,25 +5,25 @@
   </PropertyGroup>
 
   <ItemGroup Label="E2E (browser-driven tests)">
-    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.6.1" />
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.6.5" />
     <!-- GHSA-qhrr-8q5h-9q3h: patch the MessagePack dependency brought in by Aspire. -->
     <PackageVersion Include="MessagePack" Version="2.5.303" />
-    <PackageVersion Include="Microsoft.Playwright" Version="1.63.0" />
+    <PackageVersion Include="Microsoft.Playwright" Version="1.65.1" />
     <PackageVersion Include="Otp.NET" Version="1.4.1" />
   </ItemGroup>
 
   <ItemGroup Label="bUnit (component tests)">
-    <PackageVersion Include="bunit" Version="2.11.3" />
+    <PackageVersion Include="bunit" Version="2.15.2" />
   </ItemGroup>
 
   <ItemGroup Label="Testing">
     <!-- HTML/CSS engine: lets the E2E package's structural selectors be asserted against real
          parsed markup without booting a browser, and is transitively pinned into the Bunit package. -->
-    <PackageVersion Include="AngleSharp" Version="1.8.5" />
-    <PackageVersion Include="coverlet.collector" Version="10.1.0" />
-    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.11.0" />
+    <PackageVersion Include="AngleSharp" Version="1.10.5" />
+    <PackageVersion Include="coverlet.collector" Version="10.1.1" />
+    <PackageVersion Include="Microsoft.NET.Test.Sdk" Version="18.12.0" />
     <PackageVersion Include="xunit.runner.visualstudio" Version="4.0.1" />
-    <PackageVersion Include="xunit.v3" Version="4.0.2" />
-    <PackageVersion Include="xunit.v3.extensibility.core" Version="4.0.2" />
+    <PackageVersion Include="xunit.v3" Version="4.0.3" />
+    <PackageVersion Include="xunit.v3.extensibility.core" Version="4.0.3" />
   </ItemGroup>
 </Project>
