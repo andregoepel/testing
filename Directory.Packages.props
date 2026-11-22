@@ -5,7 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup Label="E2E (browser-driven tests)">
-    <PackageVersion Include="Aspire.Hosting.Testing" Version="13.6.1" />
+    <PackageVersion Include="Aspire.Hosting.Testing" Version="17.0.0" />
     <!-- GHSA-qhrr-8q5h-9q3h: patch the MessagePack dependency brought in by Aspire. -->
     <PackageVersion Include="MessagePack" Version="2.5.303" />
     <PackageVersion Include="Microsoft.Playwright" Version="1.63.0" />
